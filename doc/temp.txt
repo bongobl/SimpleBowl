@@ -1,0 +1,1 @@
+Documentation coming soon. For now, take a look at main.c to understand the basic behavior of SimpleBowl.

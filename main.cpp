@@ -17,7 +17,7 @@ int main(void){
             bowlingGame.throwBall(throwVal);
         }catch(sb::SimpleBowlException a){
 
-            cout << a.what() << "main: Call throwBall with a valid number of pins" << endl;
+            cout << a.what() << "\nmain(): Call throwBall with a valid number of pins" << endl;
             continue;
         }
         bowlingGame.displayScoreBoard();

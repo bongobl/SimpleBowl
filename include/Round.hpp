@@ -33,5 +33,5 @@ namespace sb{
 
     };
 
-}//END BOWL
+}//END SB
 #endif // ROUND

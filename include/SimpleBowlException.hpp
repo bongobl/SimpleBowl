@@ -3,7 +3,7 @@
 
 #include <stdexcept>
 #include <string>
-#include <sstream>
+
 using namespace std;
 
 namespace sb{
@@ -15,20 +15,15 @@ namespace sb{
         string message;
 
     public:
-        SimpleBowlException(int r, int i) : roundNumber(r), invalidPins(i) {
-            ostringstream error_message;
+        SimpleBowlException(int r, int i, string mes) : roundNumber(r), invalidPins(i), message(mes) {
 
-            error_message << "SimpleBowlException():" << endl;
-            if(roundNumber == 10)
-                error_message << "Round " << roundNumber << ": Pins Knocked = " << invalidPins << ", exceeds 10" << endl;
-            else
-                error_message << "Round " << roundNumber << ": Pins Down = " << invalidPins << ", exceeds 10" << endl;
-            message = error_message.str();
         }
+
+        ~SimpleBowlException() throw() {};
 
         virtual const char* what() const throw() {
             return message.c_str();
         }
     };
-}
+} //END SB
 #endif // SIMPLE_BOWL_EXCEPTION

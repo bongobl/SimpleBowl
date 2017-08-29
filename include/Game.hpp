@@ -72,8 +72,6 @@ namespace sb{
 
         template<typename T>
         std::string to_string(const T &value);
-
     };
-
-}
+} //END SB
 #endif // GAME

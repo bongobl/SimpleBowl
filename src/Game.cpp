@@ -27,7 +27,6 @@ void Game::throwBall(int pinsKnocked){
         return;
     }
 
-
     /**Throws exception for invalid pinsKnocked*/
     allRounds[currRound].knockPins(pinsKnocked);
 
@@ -88,7 +87,6 @@ void Game::throwBall(int pinsKnocked){
 
         /**round 9 strike*/
         if(allRounds[9].status == Round::STRIKE && currRound == 10){
-            cout << "This block also entered" << allRounds[currRound].pinsDown << endl;
 
             scoreBoard[9][slotID::ThirdThrow] = pinsKnocked;
             if(pinsKnocked == 10){
@@ -99,7 +97,6 @@ void Game::throwBall(int pinsKnocked){
 
         /**round 9 spare*/
         if(allRounds[9].status == Round::SPARE && currRound == 10){
-
             scoreBoard[9][slotID::ThirdThrow] = pinsKnocked;
             scoreBoard[9][slotID::RunningTotal] = getRunningScore(finalRound - 1);
         }
@@ -110,7 +107,6 @@ void Game::throwBall(int pinsKnocked){
 
         /**round 9 strike*/
         if(allRounds[9].status == Round::STRIKE && currRound == 10){
-            cout << "this block entered " << allRounds[currRound].pinsDown << endl;
             scoreBoard[9][slotID::SecondThrow] = pinsKnocked;
         }
     }
@@ -161,7 +157,7 @@ bool Game::isGameOver(){
 
 void Game::handleContracts(int pinsKnocked){
 
-    for(auto iter = roundContracts.begin(); iter < roundContracts.end(); ++iter){
+    for(vector<Contract>::iterator iter = roundContracts.begin(); iter < roundContracts.end(); ++iter){
         iter->round->pinsDown += pinsKnocked;
         --(iter->times);
         if(iter->times == 0){

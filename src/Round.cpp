@@ -22,22 +22,29 @@ void Round::knockPins(int pinsKnocked){
 
     pinsDown += pinsKnocked;
 
+
     /**Error Handling*/
-    if(roundNumber == 10){
-        if(pinsKnocked > 10){
+    if(pinsKnocked < 0){
+        pinsDown -= pinsKnocked;
+        throw SimpleBowlException(roundNumber, pinsKnocked, "Round::knockPins(): Pins knocked is less than 0");
+    }
+    if(pinsKnocked > 10){
 
             pinsDown -= pinsKnocked;
-            throw SimpleBowlException(roundNumber, pinsKnocked);
-        }
+            throw SimpleBowlException(roundNumber, pinsKnocked, "Round::knockPins(): Pins knocked is greater than 10");
+    }
+
+    if(roundNumber == 10){
+
         if(status != STRIKE && pinsDown > 10){
             pinsDown -= pinsKnocked;
 
-            throw SimpleBowlException(roundNumber, pinsKnocked + pinsDown);
+            throw SimpleBowlException(roundNumber, pinsKnocked + pinsDown, "Round::knockPins(): Total pins down exceeds 10");
         }
     }
     else if(pinsDown > 10){
         pinsDown -= pinsKnocked;
-        throw SimpleBowlException(roundNumber, pinsKnocked + pinsDown);
+        throw SimpleBowlException(roundNumber, pinsKnocked + pinsDown, "Round::knockPins(): Total pins down exceeds 10");
     }
 
     /**logic*/

@@ -17,6 +17,6 @@ namespace sb{
         friend class Game;
     };
 
-}
+} //END SB
 
 #endif // CONTRACT
