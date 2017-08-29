@@ -4,7 +4,6 @@ using namespace sb;
 Game::Game(){
 
     finalRound = 9;
-    runningScore = 0;
     currRound = 0;
 
     /**prepare rounds*/
@@ -29,8 +28,6 @@ void Game::throwBall(int pinsKnocked){
 
     /**Throws exception for invalid pinsKnocked*/
     allRounds[currRound].knockPins(pinsKnocked);
-
-    runningScore += pinsKnocked;
 
     /**Handle contracts for previous rounds*/
     handleContracts(pinsKnocked);
@@ -67,13 +64,13 @@ void Game::throwBall(int pinsKnocked){
         /**round 9 strike*/
         if(allRounds[9].status == Round::STRIKE && currRound == 10){
             scoreBoard[9][slotID::ThirdThrow] = slotStatus::Spare;
-            scoreBoard[currRound][slotID::RunningTotal] = getRunningScore(finalRound);
+            scoreBoard[currRound][slotID::RunningTotal] = getScoreUpTo(finalRound);
         }
 
         /**round 9 spare*/
         if(allRounds[9].status == Round::SPARE && currRound == 10){
             scoreBoard[9][slotID::ThirdThrow] = slotStatus::Strike;
-            scoreBoard[9][slotID::RunningTotal] = getRunningScore(finalRound - 1);
+            scoreBoard[9][slotID::RunningTotal] = getScoreUpTo(finalRound - 1);
         }
 
         if(currRound == 9){
@@ -83,7 +80,7 @@ void Game::throwBall(int pinsKnocked){
         ++currRound;
     }else if(allRounds[currRound].status == Round::OVER){
         scoreBoard[currRound][slotID::SecondThrow] = pinsKnocked;
-        scoreBoard[currRound][slotID::RunningTotal] = getRunningScore(currRound);
+        scoreBoard[currRound][slotID::RunningTotal] = getScoreUpTo(currRound);
 
         /**round 9 strike*/
         if(allRounds[9].status == Round::STRIKE && currRound == 10){
@@ -92,13 +89,13 @@ void Game::throwBall(int pinsKnocked){
             if(pinsKnocked == 10){
                 scoreBoard[9][slotID::ThirdThrow] = slotStatus::Strike;
             }
-            scoreBoard[currRound][slotID::RunningTotal] = getRunningScore(finalRound);
+            scoreBoard[currRound][slotID::RunningTotal] = getScoreUpTo(finalRound);
         }
 
         /**round 9 spare*/
         if(allRounds[9].status == Round::SPARE && currRound == 10){
             scoreBoard[9][slotID::ThirdThrow] = pinsKnocked;
-            scoreBoard[9][slotID::RunningTotal] = getRunningScore(finalRound - 1);
+            scoreBoard[9][slotID::RunningTotal] = getScoreUpTo(finalRound - 1);
         }
 
         ++currRound;
@@ -112,14 +109,14 @@ void Game::throwBall(int pinsKnocked){
     }
 }
 
-int Game::getRunningScore(int upperLimit){
-    runningScore = 0;
+int Game::getScoreUpTo(int upperLimit) const{
+    int runningScore = 0;
     for(int i = 0; i <= upperLimit; ++i){
         runningScore += allRounds[i].pinsDown;
     }
     return runningScore;
 }
-int Game::getRunningScore(){
+int Game::getRunningScore() const{
     int index = 0;
 
     if(isGameOver())
@@ -132,7 +129,7 @@ int Game::getRunningScore(){
     --index;
     return scoreBoard[index][slotID::RunningTotal];
 }
-void Game::displayRawData(){
+void Game::displayRawData() const{
 
     cout << endl <<
             "-----------------------------------RAW DATA-----------------------------------\n" << endl;
@@ -148,10 +145,10 @@ void Game::displayRawData(){
             cout << "\t" << i << "\t\t" << allRounds[i].firstThrow << "\t\t" << allRounds[i].secondThrow << "\t\t" << allRounds[i].pinsDown << "\t\t" << allRounds[i].statusStrings[allRounds[i].status] << endl;
         }
     }
-    cout << "Current Score: " << getRunningScore(finalRound) << endl;
+    cout << "Current Score: " << getScoreUpTo(finalRound) << endl;
 }
 
-bool Game::isGameOver(){
+bool Game::isGameOver() const{
     return currRound > finalRound;
 }
 
@@ -163,7 +160,7 @@ void Game::handleContracts(int pinsKnocked){
         if(iter->times == 0){
             int boardIndex = iter->round->roundNumber;
 
-            scoreBoard[boardIndex][slotID::RunningTotal] = getRunningScore(iter->round->roundNumber);
+            scoreBoard[boardIndex][slotID::RunningTotal] = getScoreUpTo(iter->round->roundNumber);
 
             roundContracts.erase(iter);
             --iter;
@@ -171,11 +168,11 @@ void Game::handleContracts(int pinsKnocked){
     }
 }
 
-int Game::scoreBoardValueAt(int roundID, int slotID){
+int Game::scoreBoardValueAt(int roundID, int slotID) const{
 
     return scoreBoard[roundID][slotID];
 }
-string Game::scoreBoardSymbolAt(int roundID, int slotID){
+string Game::scoreBoardSymbolAt(int roundID, int slotID) const{
     if(scoreBoard[roundID][slotID] == slotStatus::Vacant)
         return string("");
     else if(scoreBoard[roundID][slotID] == slotStatus::Spare)
@@ -185,7 +182,7 @@ string Game::scoreBoardSymbolAt(int roundID, int slotID){
     else
         return to_string(scoreBoard[roundID][slotID]);
 }
-void Game::displayScoreBoard(){
+void Game::displayScoreBoard() const{
 
     cout << endl <<
             "-----------------------------------SCORE BOARD-----------------------------------\n" << endl;
@@ -214,7 +211,7 @@ void Game::displayScoreBoard(){
 }
 
 template<typename T>
-string Game::to_string(const T &value){
+string Game::to_string(const T &value) const{
     std::ostringstream stm;
     stm << value;
     return stm.str();

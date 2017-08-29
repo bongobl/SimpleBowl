@@ -18,7 +18,6 @@ using namespace std;
 namespace sb{
 
     namespace roundID{
-
         const int R1 = 0;
         const int R2 = 1;
         const int R3 = 2;
@@ -32,13 +31,12 @@ namespace sb{
     }
 
     namespace slotID{
-
         const int FirstThrow = 0;
         const int SecondThrow = 1;
         const int RunningTotal = 2;
         const int ThirdThrow = 3;
-
     }
+
     namespace slotStatus{
         const int Vacant = -1;
         const int Spare = -2;
@@ -50,7 +48,6 @@ namespace sb{
     class Game{
 
         int finalRound;
-        int runningScore;
         int currRound;
         Round allRounds[11];
 
@@ -59,19 +56,20 @@ namespace sb{
     public:
         Game();
         void throwBall(int pinsKnocked);
-        int getRunningScore(int upperLimit);
-        int getRunningScore();
-        void displayRawData();
-        bool isGameOver();
-        int scoreBoardValueAt(int roundID, int slotID);
-        string scoreBoardSymbolAt(int roundID, int slotID);
-        void displayScoreBoard();
+
+        int getRunningScore() const;
+        void displayRawData() const;
+        bool isGameOver() const;
+        int scoreBoardValueAt(int roundID, int slotID) const;
+        string scoreBoardSymbolAt(int roundID, int slotID) const;
+        void displayScoreBoard() const;
 
     private:
+        int getScoreUpTo(int upperLimit) const;
         void handleContracts(int pinsKnocked);
 
         template<typename T>
-        std::string to_string(const T &value);
+        std::string to_string(const T &value) const;
     };
 } //END SB
 #endif // GAME
