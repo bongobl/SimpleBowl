@@ -3,6 +3,8 @@ PROJECT(simple-bowl-build)
 
 add_subdirectory(src lib)
 
+
+# option to build example
 option(BUILD_EXAMPLE_TEST "check to build example" OFF)
 
 if(BUILD_EXAMPLE_TEST)

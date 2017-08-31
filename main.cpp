@@ -23,6 +23,6 @@ int main(void){
         bowlingGame.displayScoreBoard();
 
     }
-    cout << "Scoreboard value: " << bowlingGame.scoreBoardValueAt(sb::roundID::R3, sb::slotID::RunningTotal) << endl;
+
     return 0;
 }
