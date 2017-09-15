@@ -3,13 +3,7 @@ cmake_minimum_required(VERSION 2.8.3)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 #define all source files
-set( SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../include/Contract.hpp 
-          ${CMAKE_CURRENT_SOURCE_DIR}/../include/Game.hpp 
-          ${CMAKE_CURRENT_SOURCE_DIR}/../include/Round.hpp 
-          ${CMAKE_CURRENT_SOURCE_DIR}/../include/SimpleBowlException.hpp 
-          Contract.cpp 
-          Game.cpp 
-          Round.cpp )
+set( SRCS SimpleBowlException.cpp Contract.cpp Game.cpp Round.cpp )
 
 # cache variable for build type
 if(DEFINED CMAKE_BUILD_TYPE)

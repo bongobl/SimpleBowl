@@ -8,22 +8,18 @@ using namespace std;
 
 namespace sb{
 
-    class SimpleBowlException : public std::exception{
+    class SimpleBowlException : public std::exception {
 
         int roundNumber;
         int invalidPins;
         string message;
 
     public:
-        SimpleBowlException(int r, int i, string mes) : roundNumber(r), invalidPins(i), message(mes) {
+        SimpleBowlException(int r, int i, string mes);
 
-        }
+        ~SimpleBowlException() throw();
 
-        ~SimpleBowlException() throw() {};
-
-        virtual const char* what() const throw() {
-            return message.c_str();
-        }
+        virtual const char* what() const throw();
     };
 } //END SB
 #endif // SIMPLE_BOWL_EXCEPTION
